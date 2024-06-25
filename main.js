@@ -8,7 +8,7 @@ let consulta = {
 let consultas = [];
 let opcao = 0;
 
-console.log("digite 1 para adicionar a consulta e insira seu nome");
+console.log("Digite 1 para adicionar a consulta e insira seu nome. Digite 2 para listar todas as consultas agenddadas.");
 
 process.stdin.on("data", function (data) {
   entrada = data.toString().trim().toLowerCase();
@@ -39,6 +39,15 @@ process.stdin.on("data", function (data) {
           cancelada: false,
         };
       }
+    }
+    if (opcao == 2){
+        if (consultas == ""){
+            console.log("não possui consultas")
+            process.exit()
+        } else {
+            console.log("essas são as consultas atuais", consultas)
+            opcao = 0 
+        }
     }
   }
 });
