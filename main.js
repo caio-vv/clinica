@@ -7,8 +7,12 @@ let consulta = {
 let consultas = [];
 let deleteconsulta = [];
 let opcao = 0;
+let indiceAtualizar;
+let atributoAtualizar;
 
-console.log("Digite 1 para adicionar a consulta e insira seu nome. Digite 2 para listar todas as consultas agendadas.");
+console.log(
+  "Digite 1 para adicionar a consulta e insira seu nome. Digite 2 para listar todas as consultas agendadas. Digite 3 para cancelar uma consulta. Digite 4 para atualizar uma consulta"
+);
 
 process.stdin.on("data", function (data) {
   entrada = data.toString().trim().toLowerCase();
@@ -39,31 +43,53 @@ process.stdin.on("data", function (data) {
         };
       }
     }
-    if (opcao == 2){
-        if (consultas == ""){
-            console.log("não possui consultas")
-            process.exit()
-        } else {
-            console.log("essas são as consultas atuais", consultas)
-            opcao = 0 
-        }
+    if (opcao == 2) {
+      if (consultas == "") {
+        console.log("não possui consultas");
+        process.exit();
+      } else {
+        console.log("essas são as consultas atuais", consultas);
+        opcao = 0;
+      }
     }
-    if (opcao == 3){
-        let consultaRemover = data.toString().toLowerCase().trim()
-        let consultaEncontrada = false
-        consultas.forEach((consulte, index) =>{
-            if (consulte.nome.toLowerCase() == consultaRemover.toLowerCase()){
-                consultas.splice(index, 1);
-                consultaEncontrada = true
-            }
-        })
-        if (consultaEncontrada = true){
-            console.log("consulta removida")
-            opcao = 0
-        } else {
-            console.log("consulta não encontrada")
-            opcao = 0
+    if (opcao == 3) {
+      let consultaRemover = data.toString().toLowerCase().trim();
+      let consultaEncontrada = false;
+      consultas.forEach((consulte, index) => {
+        if (consulte.nome.toLowerCase() == consultaRemover.toLowerCase()) {
+          consultas.splice(index, 1);
+          consultaEncontrada = true;
         }
+      });
+      if ((consultaEncontrada = true)) {
+        console.log("consulta removida");
+        opcao = 0;
+      } else {
+        console.log("consulta não encontrada");
+        opcao = 0;
+      }
+    }
+    if (opcao == 4) {
+      if (!indiceAtualizar) {
+        indiceAtualizar = entrada;
+        console.log("qual atributo deseja alterar? digite o nome");
+        let atributos = Object.keys(consultas[indiceAtualizar]);
+        for (let i = 0; i < atributos.length; i++) {
+          console.log(atributos[i]);
+        }
+      } else if (!atributoAtualizar) {
+        atributoAtualizar = entrada;
+        console.log("qual é o novo valor");
+      } else {
+        consultas[indiceAtualizar][atributoAtualizar] = entrada;
+        console.log("dados atualizados");
+        indiceAtualizar;
+        atributoAtualizar;
+        opcao = 0;
+      }
+    }
+    if (opcao == 5) {
+      process.exit();
     }
   }
 });
